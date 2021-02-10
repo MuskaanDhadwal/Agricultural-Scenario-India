@@ -162,193 +162,197 @@ image = Image.open('Images/digital_agriculture3.jpg')
 
 st.image(image,caption='Agriculture and Data Science',use_column_width=True)
 
-st.header('Introduction')
-st.write("""
-India is an agriculture  based nation employing over 50% of the country’s workforce .
-However with the global and national food demand  on the rise due to the ever-increasing
-population, the agriculture sector is unable to meet the required productivity levels.
-Despite being called the backbone of Indian economy, the agriculture sector  has faced
-numerous setbacks in recent years .
+choice=st.sidebar.selectbox('Select option',['Home','About','Dataset','Model'])
 
+if choice=='Home':
+    st.header('Introduction')
+    st.write("""
+    India is an agriculture  based nation employing over 50% of the country’s workforce .
+    However with the global and national food demand  on the rise due to the ever-increasing
+    population, the agriculture sector is unable to meet the required productivity levels.
+    Despite being called the backbone of Indian economy, the agriculture sector  has faced
+    numerous setbacks in recent years .
 
 
 
-""")
 
-st.header('Purpose of The Project')
-st.write("""
-1) We want to do a comprehensive analysis which could act as **valuable reference material**.
+    """)
 
-2) Very limited research on how weather pattern and climate change is affecting food market and **agriculture in India**.
+    st.header('Purpose of The Project')
+    st.write("""
+    1) We want to do a comprehensive analysis which could act as **valuable reference material**.
 
-3) Proper analysis on how a more **generalized approach** can benefit agriculture.
+    2) Very limited research on how weather pattern and climate change is affecting food market and **agriculture in India**.
 
-4) Remove the Deficiency of **good and comprehensive visualization** and interpretation of the entire problem statement.
+    3) Proper analysis on how a more **generalized approach** can benefit agriculture.
 
-5) **Comparing Algorithms** best suited for the problem statement .
+    4) Remove the Deficiency of **good and comprehensive visualization** and interpretation of the entire problem statement.
 
+    5) **Comparing Algorithms** best suited for the problem statement .
 
 
-""")
-# Dataset head
-st.header("""
-Dataset Used
-""")
 
-st.write(df.head(10))
+    """)
+elif choice=='Dataset':
+    # Dataset head
+    st.header("""
+    Dataset Used
+    """)
 
-# Dataset Description
-st.write("""
-## Dataset Description
-""")
+    st.write(df.head(10))
 
-st.write(df.describe())
+    # Dataset Description
+    st.write("""
+    ## Dataset Description
+    """)
 
-# Dataset Columns
-st.write("""
-## Dataset Columns
-""")
+    st.write(df.describe())
 
-st.write(df.columns)
+    # Dataset Columns
+    st.write("""
+    ## Dataset Columns
+    """)
 
+    st.write(df.columns)
 
+elif choice=='Model':
 
-# Side Bar
-def user_input():
+    # Side Bar
+    def user_input():
 
-    st.sidebar.header('User Input Parameters')
+        st.sidebar.header('User Input Parameters')
 
-    option_state=st.sidebar.selectbox('Select State',df.State_Name.unique())
-    id_state=State_id[option_state]
-    st.sidebar.write('State selected is: ',option_state)
-    st.sidebar.write('State Id is: ',id_state)
+        option_state=st.sidebar.selectbox('Select State',df.State_Name.unique())
+        id_state=State_id[option_state]
+        st.sidebar.write('State selected is: ',option_state)
+        st.sidebar.write('State Id is: ',id_state)
 
-    option_Crop=st.sidebar.selectbox('Select Crop',df.Crop.unique())
-    id_crop=crop_id[option_Crop]
-    st.sidebar.write('Crop selected is: ',option_Crop)
-    st.sidebar.write('Crop Id is: ',id_crop)
+        option_Crop=st.sidebar.selectbox('Select Crop',df.Crop.unique())
+        id_crop=crop_id[option_Crop]
+        st.sidebar.write('Crop selected is: ',option_Crop)
+        st.sidebar.write('Crop Id is: ',id_crop)
 
-    option_year=st.sidebar.selectbox('Select Year',[1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012])
-    st.sidebar.write('Year selected is: ',option_year)
+        option_year=st.sidebar.selectbox('Select Year',[1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012])
+        st.sidebar.write('Year selected is: ',option_year)
 
-    option_Area=st.sidebar.slider('Select Area',0.01,80000.0,1000.0)
-    st.sidebar.write('Area selected is: ',option_Area)
+        option_Area=st.sidebar.slider('Select Area',0.01,80000.0,1000.0)
+        st.sidebar.write('Area selected is: ',option_Area)
 
-    option_Temp=st.sidebar.slider('Select Temperature',24.10,25.13)
-    st.sidebar.write('Temperature selected is: ',option_Temp)
+        option_Temp=st.sidebar.slider('Select Temperature',24.10,25.13)
+        st.sidebar.write('Temperature selected is: ',option_Temp)
 
-    option_Rain=st.sidebar.slider('Select Rain Measure',920.80,1243.50)
-    st.sidebar.write('Rain Measure selected is: ',option_Rain)
+        option_Rain=st.sidebar.slider('Select Rain Measure',920.80,1243.50)
+        st.sidebar.write('Rain Measure selected is: ',option_Rain)
 
 
-    # selected Parameters
+        # selected Parameters
 
-    data={'State_Name':id_state,
-        'Crop':id_crop,
-        'Year':option_year,
-        'Area':option_Area,
-        'Temp':option_Temp,
-        'Rain':option_Rain}
+        data={'State_Name':id_state,
+            'Crop':id_crop,
+            'Year':option_year,
+            'Area':option_Area,
+            'Temp':option_Temp,
+            'Rain':option_Rain}
 
-    features=pd.DataFrame(data,index=[0])
-    return (features)
+        features=pd.DataFrame(data,index=[0])
+        return (features)
 
-df_user_input=user_input()
+    df_user_input=user_input()
 
-st.subheader('User Input Parameters')
-st.write(df_user_input)
+    st.subheader('User Input Parameters')
+    st.write(df_user_input)
 
-st.subheader('Select Model')
+    st.subheader('Select Model')
 
-option_model=st.selectbox('Select Model',['RandomForest','SVM','SDG','Ridge'])
+    option_model=st.selectbox('Select Model',['RandomForest','SVM','SDG','Ridge'])
 
-def svm_model():
-    st.subheader('Code')
-    st.code(
-    """
+    def svm_model():
+        st.subheader('Code')
+        st.code(
+        """
 
-        # Model Training
+            # Model Training
 
-        df=pd.read_csv('Data/streamlit_data.csv')
+            df=pd.read_csv('Data/streamlit_data.csv')
 
-        df_test=df.sample(frac = 0.1)
-        
-        X=df_test[['Crop_Year','Avg_Temp', 'Avg_Rain','states_id', 'crop_id', 'Area',]].values
+            df_test=df.sample(frac = 0.1)
 
-        df_test.Production = df_test.Production.astype(int)
+            X=df_test[['Crop_Year','Avg_Temp', 'Avg_Rain','states_id', 'crop_id', 'Area',]].values
 
-        y=df_test[['Production']].values
+            df_test.Production = df_test.Production.astype(int)
 
-        X_train,X_test,y_train,y_test=train_test_split(X,y,test_size = 0.70)
+            y=df_test[['Production']].values
 
-        clf = svm.SVC(kernel='linear') # Linear Kernel
+            X_train,X_test,y_train,y_test=train_test_split(X,y,test_size = 0.70)
 
-        clf.fit(X_train,y_train.ravel())
+            clf = svm.SVC(kernel='linear') # Linear Kernel
 
-        # Pickling the model
+            clf.fit(X_train,y_train.ravel())
 
-        pickle.dump(clf, open('svm_clf.pkl', 'wb'))
+            # Pickling the model
 
+            pickle.dump(clf, open('svm_clf.pkl', 'wb'))
 
 
 
-    """
-    )
-    # Reads in saved classification model
-    import pickle
-    load_clf = pickle.load(open('svm_clf.pkl', 'rb'))
 
+        """
+        )
+        # Reads in saved classification model
+        import pickle
+        load_clf = pickle.load(open('svm_clf.pkl', 'rb'))
 
-    # User Input Predictions
 
-    st.subheader("User Input Predictions")
-    u_pred=load_clf.predict(df_user_input)
-    st.write('Amount of Production Predicted : ' , u_pred)
+        # User Input Predictions
 
+        st.subheader("User Input Predictions")
+        u_pred=load_clf.predict(df_user_input)
+        st.write('Amount of Production Predicted : ' , u_pred)
 
-def rfr_model():
-    st.subheader('Code')
-    st.code(
-    """
 
-        # Model Training
+    def rfr_model():
+        st.subheader('Code')
+        st.code(
+        """
 
-        X=df[['Crop_Year','Avg_Temp', 'Avg_Rain','states_id', 'crop_id', 'Area_10000',]].values
+            # Model Training
 
-        df.Prod_1000000 = df.Prod_1000000.astype(int)
+            X=df[['Crop_Year','Avg_Temp', 'Avg_Rain','states_id', 'crop_id', 'Area_10000',]].values
 
-        y=df[['Prod_1000000']].values
+            df.Prod_1000000 = df.Prod_1000000.astype(int)
 
-        X_train,X_test,y_train,y_test=train_test_split(X,y,test_size = 0.70)
+            y=df[['Prod_1000000']].values
 
-        clf = RandomForestClassifier(n_estimators = 100)
+            X_train,X_test,y_train,y_test=train_test_split(X,y,test_size = 0.70)
 
-        clf.fit(X_train,y_train.ravel())
+            clf = RandomForestClassifier(n_estimators = 100)
 
-        y_pred = clf.predict(X_test)
+            clf.fit(X_train,y_train.ravel())
 
-        st.subheader('Random Forest Classifier')
-        st.write("ACCURACY OF THE MODEL: ", metrics.accuracy_score(y_test, y_pred))
+            y_pred = clf.predict(X_test)
 
+            st.subheader('Random Forest Classifier')
+            st.write("ACCURACY OF THE MODEL: ", metrics.accuracy_score(y_test, y_pred))
 
 
 
-    """
-    )
-    # Reads in saved classification model
-    import pickle
-    load_clf = pickle.load(open('rf_clf.pkl', 'rb'))
 
+        """
+        )
+        # Reads in saved classification model
+        import pickle
+        load_clf = pickle.load(open('rf_clf.pkl', 'rb'))
 
-    # User Input Predictions
 
-    st.subheader("User Input Predictions")
-    u_pred=load_clf.predict(df_user_input)
-    st.write('Amount of Production Predicted : ' , u_pred)
+        # User Input Predictions
 
+        st.subheader("User Input Predictions")
+        u_pred=load_clf.predict(df_user_input)
+        st.write('Amount of Production Predicted : ' , u_pred)
 
 
-if option_model=='RandomForest' :
-    rfr_model()
-elif option_model=='SVM':
-    svm_model()
+
+    if option_model=='RandomForest' :
+        rfr_model()
+    elif option_model=='SVM':
+        svm_model()
