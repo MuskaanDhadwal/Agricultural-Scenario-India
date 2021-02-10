@@ -356,3 +356,5 @@ elif choice=='Model':
         rfr_model()
     elif option_model=='SVM':
         svm_model()
+
+      
